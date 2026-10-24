@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thai Drama God Studio — The Drama God Engine</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0618;--panel:#150c2c;--panel2:#1c1038;--line:#3a2468;--tx:#efe9ff;--mu:#9d8fc4;--pk:#ff4fd0;--cy:#4df3ff;--vi:#a35bff;--g:linear-gradient(135deg,#ff4fd0,#4df3ff)}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(circle at 50% -10%,#3b1670 0,transparent 55%),var(--bg);color:var(--tx);font:15px/1.55 'Noto Sans Thai',system-ui,sans-serif;min-height:100vh;padding:16px 14px 40px}
+h1,h2,h3,.k{font-family:Kanit,'Noto Sans Thai',sans-serif}
+main{max-width:720px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:18px}
+.brand{font:700 15px/1.1 Kanit;letter-spacing:.04em;color:#fff}.brand b{color:var(--pk)}
+.badge{font-size:12px;border:1px solid var(--vi);border-radius:99px;padding:4px 12px;color:var(--cy);background:#1d0f3d}
+.hero{text-align:center;padding:12px 0 22px}
+.hero small{color:var(--cy);letter-spacing:.2em;font:500 12px Kanit}
+.hero h1{font-size:clamp(38px,11vw,62px);line-height:1;margin:10px 0 14px;background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 40px #ff4fd055}
+.hero p{color:#cfc3ee;max-width:46ch;margin:0 auto 18px}
+.row{display:flex;gap:8px;flex-wrap:wrap}.hero .row{justify-content:center}
+button,select,input,textarea{font:inherit;color:var(--tx)}
+.btn{border:1px solid var(--line);background:var(--panel2);border-radius:12px;padding:10px 16px;cursor:pointer;font:500 15px Kanit;transition:.15s}
+.btn:hover{border-color:var(--cy)}
+.btn.p{background:var(--g);color:#14052b;border:0;font-weight:600}
+.btn.sm{padding:6px 12px;font-size:13px}
+.btn.d{color:#ff8fb8;background:#3a1030;border-color:#6b2050}
+:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
+.card{background:linear-gradient(160deg,var(--panel),#0f0822);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px}
+.flow h4{font:500 12px Kanit;letter-spacing:.14em;color:var(--mu);margin-bottom:10px}
+.nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.nav button{background:#120a26;border:1px solid var(--line);border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;font-size:12px;line-height:1.3}
+.nav button i{display:block;width:26px;margin:0 auto 4px;border-radius:7px;font:600 12px/24px Kanit;font-style:normal;background:#2a1650;color:var(--cy);border:1px solid var(--vi)}
+.nav button.on{border-color:var(--pk);background:#2a1050;box-shadow:0 0 18px #ff4fd044}
+.nav button.on i{background:var(--pk);color:#fff}
+.flow ul{list-style:none;margin-top:12px;color:var(--mu);font-size:13px;padding:0}
+.help{margin-top:12px;font-size:13px;color:#cfc3ee}
+.help summary{cursor:pointer;color:var(--cy);font-weight:500}
+.help ol{padding-left:20px;margin-top:6px;color:var(--mu)}
+h2{font-size:24px}h2 em{font-style:normal;color:var(--pk);margin-right:6px}
+.sub{color:var(--mu);margin:2px 0 14px}
+label.l{display:block;font-size:13px;font-weight:600;margin:14px 0 6px;color:#dcd2f7}
+.hint{font-size:12px;color:var(--mu);margin-top:4px}
+input[type=text],input[type=number],select,textarea{width:100%;background:#0a0516;border:1px solid var(--line);border-radius:11px;padding:10px 12px}
+textarea{resize:vertical;min-height:90px}
+input::placeholder,textarea::placeholder{color:#5f5282}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;background:#120a26;border:1px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;font-weight:500}
+.opt.on{border-color:var(--pk);background:linear-gradient(90deg,#3a1260,#1b0f3a);box-shadow:0 0 16px #ff4fd033}
+.rg{display:flex;justify-content:space-between;align-items:baseline}.rg b{color:var(--cy);font:600 16px Kanit}
+input[type=range]{width:100%;accent-color:var(--pk)}
+.char{background:#120a26;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:12px}
+.char header{display:flex;justify-content:space-between;align-items:center}
+.char header b{font:600 17px Kanit}.char header span{display:block;font-size:12px;color:var(--mu)}
+.char .f{font-size:12px;color:var(--mu);margin:8px 0 3px}
+.tg{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #2a1a4d}
+.tg small{display:block;color:var(--mu);font-size:12px}
+.sw{position:relative;flex:none;width:46px;height:26px}
+.sw input{opacity:0;position:absolute;inset:0;margin:0;cursor:pointer;z-index:2;width:100%;height:100%}
+.sw s{position:absolute;inset:0;border-radius:99px;background:#2a1a4d;transition:.2s;text-decoration:none}
+.sw s::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s}
+.sw input:checked+s{background:var(--pk)}.sw input:checked+s::after{transform:translateX(20px)}
+.sw input:focus-visible+s{outline:2px solid var(--cy)}
+.acts{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.stats div{background:#120a26;border:1px solid var(--line);border-radius:12px;padding:10px;font-size:12px;color:var(--mu)}
+.stats b{display:block;font:700 26px Kanit;color:var(--cy)}
+#out{min-height:260px;font-size:13px;line-height:1.6;background:#050210}
+.vault h3{font-size:20px;color:#fff}.vault h3::before{content:"✦ ";color:var(--pk)}
+.proj{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:8px;background:#120a26}
+.proj small{display:block;color:var(--mu);font-size:12px}
+.note{font-size:12px;color:var(--mu);background:#120a26;border:1px dashed var(--line);border-radius:12px;padding:10px 12px;margin-top:14px}
+details.ky{background:#120a26;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:14px 0 4px;font-size:13px}
+details.ky summary{cursor:pointer;color:var(--cy);font-weight:500}
+#st{font-size:13px;color:var(--cy);margin-top:8px;min-height:20px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+footer{text-align:center;margin-top:28px;color:var(--mu);font-size:12px}
+footer b{font:600 13px Kanit;color:var(--cy)}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);opacity:0;pointer-events:none;background:#0d1d33;border:1px solid var(--cy);color:#e9fdff;padding:10px 18px;border-radius:12px;transition:.25s;z-index:9}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><div class="brand">✦ THAI <b>DRAMA GOD</b><br>STUDIO</div><div class="badge">● SYNTHWAVE STORY ENGINE</div></div>
+
+<section class="hero">
+<small>CREATE YOUR OWN UNIVERSE</small>
+<h1>THE DRAMA<br>GOD ENGINE</h1>
+<p>สตูดิโอออกแบบจักรวาลละคร AI ตั้งแต่บทสุดเข้มข้น ตัวละคร พลังเทพ ไปจนถึงแผนภาพและเสียงพากย์ — ทุกจินตนาการเริ่มต้นที่นี่</p>
+<div class="row"><button class="btn p" data-a="start">✦ เริ่มสร้างจักรวาล</button><button class="btn" data-a="vault">▤ คลังโปรเจกต์</button></div>
+</section>
+
+<section class="card flow" id="flow">
+<h4>PRODUCTION FLOW / 06</h4>
+<div class="nav" id="nav"></div>
+<ul><li>◇ Synthwave aesthetics</li><li>◇ Story continuity system</li><li>◇ Frame-by-frame planning</li></ul>
+<details class="help"><summary>วิธีใช้งาน (กดเพื่อดู)</summary>
+<ol>
+<li>เลือกแนว สไตล์ภาพ จำนวนฉาก และขนาดทีมนักแสดง ในขั้นตอน 01</li>
+<li>กรอกหรือสุ่มตัวละครหลัก พร้อมพลัง อาวุธ และรูปลักษณ์ เพื่อล็อกตัวละครให้เหมือนเดิมทุกฉาก (ขั้นตอน 02)</li>
+<li>เลือกสัตว์คู่กาย พาหนะ อาวุธเทพ และวงแหวนเวท (ขั้นตอน 03)</li>
+<li>ระบุเหตุการณ์สุดเข้มข้นและตอนจบ หรือกดสุ่มเหตุการณ์ตัวอย่าง (ขั้นตอน 04)</li>
+<li>เลือกสไตล์เสียงและเขียนคำสั่งกำกับแต่ละเฟรม (ขั้นตอน 05)</li>
+<li>กด “สร้าง MASTER PROMPT” แล้วคัดลอกไปใช้กับ AI ที่คุณเลือก หรือบันทึกเป็นโปรเจกต์ (ขั้นตอน 06)</li>
+</ol></details>
+</section>
+
+<section class="card" id="step"></section>
+
+<section class="card vault" id="vault"><h3>คลังโปรเจกต์ของฉัน</h3><p class="sub">โปรเจกต์ที่บันทึกไว้ในเบราว์เซอร์เครื่องนี้จะแสดงด้านล่าง</p><div id="plist"></div></section>
+
+<footer><b>Thai Drama God Studio · Synthwave Edition</b><br>Dream in neon. Direct your universe.</footer>
+</main>
+<div id="toast" role="status"></div>
+
+<script>
+const STEPS=["จักรวาลละคร","นักแสดง","พลังและอุปกรณ์","บทและเหตุการณ์","กำกับภาพและเสียง","ผลิตและส่งออก"];
+const GENRES=[["⚖️","ละครคุณธรรม หักมุม"],["💔","ดราม่าครอบครัว"],["♟️","แก่แค้น ชิงอำนาจ"],["🔮","เทพเซียน แฟนตาซี"],["🚀","แอ็กชันไซไฟ"],["🌹","โรแมนติกระทึกขวัญ"],["🌘","สยองขวัญ ลึกลับ"],["⚔️","มหากาพย์สงคราม"]];
+const O={
+style:["ภาพยนตร์เอเชียสมจริงระดับโรงภาพยนตร์","อนิเมะซินธ์เวฟนีออน","ภาพวาดสีน้ำมันเชิงมหากาพย์","ไซเบอร์พังก์ไทยร่วมสมัย"],
+cast:["ตัวละครหลัก 3 คน + สมทบ 3 คน","ทีมนักแสดงขนาดเล็ก 3–5 คน","ทีมนักแสดงขนาดกลาง 6–10 คน","มหากาพย์ตัวละครจำนวนมาก 11 คนขึ้นไป"],
+role:["ตัวเอก","ตัวร้าย","ตัวสมทบ","ผู้ช่วย","ที่ปรึกษา"],
+castDir:["นักแสดงสมมติหนุ่มสาวเอเชีย หน้าตาโดดเด่น ระดับซูเปอร์สตาร์","นักแสดงเอเชียลุคหรูหรา แบบซีรีส์จีน","นักแสดงเอเชียลุคโมเดิร์น แบบซีรีส์เกาหลี","ตัวละครแฟนตาซีเหนือมนุษย์"],
+pet:["ไม่มีสัตว์คู่กาย","สัตว์เทพคู่กาย","มังกรเทพ","เสือวิญญาณ","หุ่นยนต์คู่หู","สัตว์คู่กายที่ออกแบบเอง"],
+veh:["ไม่มีพาหนะ","มอเตอร์ไซค์ไฮเทค","มอเตอร์ไซค์เทพเหาะเหิน","รถสปอร์ตล้ำยุค","สัตว์เทพสำหรับขี่","ยานอวกาศ","พาหนะเวทมนตร์"],
+wp:["ดาบเทพ","หอกมิติ","ธนูสุริยะ","พัดสวรรค์","หมัดพลังจักรวาล","ปืนพลังงานอนาคต","คฑาเวทมนตร์","โซ่ผนึกวิญญาณ"],
+rings:["ไม่มีวงแหวน","1 วง","3 วง","6 วง","9 วง","12 วง"],
+ringSt:["วงแหวนอักขระทองคำเรืองแสง","วงแหวนพลังนีออน Synthwave","วงแหวนมิติหมุนซ้อนกัน","วงแหวนธาตุไฟ น้ำ สายฟ้า"],
+end:["หักมุมรุนแรงและทิ้งปมภาคต่อ","จบสมบูรณ์แบบ แฮปปี้เอนดิ้ง","จบเศร้าสะเทือนใจ","จบเปิดให้ตีความ"],
+voice:["เสียงชายทุ้มทรงพลัง สลับเสียงนักแสดงหญิงนุ่มลึก","เสียงบรรยายสารคดีขรึมลึก","เสียงพากย์ละครไทยคลาสสิก","เสียงเยาว์วัยสดใสสไตล์อนิเมะ"],
+len:["5–8 วินาที","8–15 วินาที","15–30 วินาที","30–60 วินาที"]};
+const EVT=["กล้องเคลื่อนเข้าหาใบหน้า แววตาสั่นไหว ก่อนเผยความลับ แสงนีออนสะท้อนบนใบหน้า","หลักฐานชิ้นสำคัญถูกตัดต่อ แต่งเติมในภาพเผยตัวคนบงการ ก่อนพลิกความคาดหมาย","เจ้าของร้านเปิดเผยว่าเหตุร้ายทั้งหมดเริ่มจากการช่วยคนคนหนึ่ง","ประตูมิติเปิดกลางเมือง พลังเทพตื่นพร้อมคำสาปที่ซ่อนอยู่","พันธมิตรที่ไว้ใจที่สุดเลือกหักหลังในวินาทีสุดท้าย"];
+const SAMPLE=["เปิดปม → หลักฐานขัดแย้ง → การตัดสินใจที่มีราคา → พลิกความคาดหมาย → ทิ้งคำถามให้ผู้ชมติดตาม","เปิดฉากด้วยความสงบ → ความลับแตกกระจาย → ศัตรูเปิดตัว → ศึกชี้ชะตา → ตอนจบเปิดภาคต่อ","เหตุการณ์ปริศนา → ตัวละครเลือกข้าง → พลังเทพตื่น → ราคาที่ต้องจ่าย → การเผชิญหน้าครั้งสุดท้าย"];
+const RND=[["พลังมิติ","ดาบเทพ","หนุ่มเอเชียลุคสุขุม ผมดำ"],["รักษาและพยากรณ์","ไม่มี","สาวเอเชียสง่างาม แววตามุ่งมั่น"],["ควบคุมเงา","หอกอสุรา","หนุ่มเอเชียลึกลับ ชุดดำ"],["ควบคุมเวลา","พัดสวรรค์","สาวเอเชียผมสีเงิน ชุดนีออน"]];
+const NAMES=["หลินเยว่","เทพอัคคี","คุณยายสมใจ","ไกรวุฒิ","ชบาทอง"];
+const CUS="✍️ กำหนดเอง…";
+const gname=()=>s.genre===8?(s.gCustom.trim()||"แนวกำหนดเอง"):GENRES[s.genre][1];
+const sty=()=>s.style===CUS?(s.styleCustom.trim()||O.style[0]):s.style;
+const cst=()=>s.cast===CUS?(s.castCustom.trim()||O.cast[0]):s.cast;
+const def=()=>({step:0,genre:0,style:O.style[0],scenes:3,cast:O.cast[0],gCustom:"",styleCustom:"",castCustom:"",title:"",world:"",theme:"",extra:"",
+chars:[{n:"พระเอก",r:"ตัวเอก",p:"พลังมิติ",w:"ดาบเทพ",l:"หนุ่มเอเชียลุคสุขุม ผมดำ"},{n:"นางเอก",r:"ตัวเอก",p:"รักษาและพยากรณ์",w:"ไม่มี",l:"สาวเอเชียสง่างาม แววตามุ่งมั่น"},{n:"ตัวร้าย",r:"ตัวร้าย",p:"ควบคุมเงา",w:"หอกอสุรา",l:"หนุ่มเอเชียลึกลับ ชุดดำ"}],
+castDir:O.castDir[0],refs:[],note:"",newName:"",newRole:"ตัวเอก",
+pet:O.pet[0],veh:O.veh[0],wp:O.wp[0],pw:"ควบคุมเวลาและพลังมิติ",rings:"3 วง",ringSt:O.ringSt[0],
+event:"ความลับแตกหัก การทรยศ หลักฐานที่หายไป และจุดพลิกผันที่คาดไม่ถึง",end:O.end[0],rndEvt:true,avoid:true,sample:"",
+voice:O.voice[0],lock:true,all:true,narr:true,frame:1,frames:{},len:O.len[0],prompt:"",spc:2,shots:null});
+let s=def();
+const $=q=>document.querySelector(q);
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const M={google:["gemini-3.8-flash","gemini-3.7-flash","gemini-3.5-flash-lite"],anthropic:["claude-sonnet-5-5","claude-opus-5-5","claude-haiku-5-5"]};
+const PN={google:"Google AI Studio (Gemini)",anthropic:"Anthropic (Claude)"};
+const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k)||"";v===null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){return""}};
+const PROV=()=>LS("tdgs_prov")||"google",KEY=()=>LS("tdgs_key_"+PROV()),MODEL=()=>{const v=LS("tdgs_model_"+PROV());return v&&!/^gemini-(2\.|1\.)/.test(v)?v:M[PROV()][0]};
+const SYS="คุณคือผู้เชี่ยวชาญด้านการเขียนบทและวิศวกรรม Prompt สำหรับการผลิตละครสั้น/วิดีโอด้วย AI ตอบเป็นภาษาไทย ใช้ข้อมูลโปรเจกต์ของผู้ใช้อย่างครบถ้วน ห้ามเปลี่ยนรายละเอียดตัวละครที่ล็อกไว้ และเขียนเป็นข้อความธรรมดา (plain text) ที่พร้อมคัดลอกไปใช้ได้ทันที";
+let aiMsgs=[],stopped=false,rdr=null;
+const setSt=m=>{const e=$("#st");if(e)e.textContent=m};
+function busy(b){["aib","rfb","shb"].forEach(i=>{const e=$("#"+i);if(e)e.disabled=b});const x=$("#stb");if(x)x.hidden=!b}
+async function ai(msgs,onT,sys){
+ stopped=false;rdr=null;const g=PROV()==="google";let r;
+ if(g)r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+encodeURIComponent(MODEL())+":streamGenerateContent?alt=sse&key="+encodeURIComponent(KEY()),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({systemInstruction:{parts:[{text:sys||SYS}]},contents:msgs.map(m=>({role:m.role==="assistant"?"model":"user",parts:[{text:m.content}]})),generationConfig:{maxOutputTokens:32000}})});
+ else r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":KEY(),"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:MODEL(),max_tokens:16000,stream:true,system:sys||SYS,messages:msgs})});
+ if(!r.ok){let m="HTTP "+r.status;try{const e=await r.json();m=(e.error&&e.error.message)||m}catch(e){}throw new Error(m)}
+ let out="";
+ const line=l=>{if(!l.startsWith("data:"))return;let j;try{j=JSON.parse(l.slice(5))}catch(e){return}
+  let x="";
+  if(g){if(j.error)throw new Error(j.error.message);if(j.promptFeedback&&j.promptFeedback.blockReason)throw new Error("ถูกบล็อก: "+j.promptFeedback.blockReason);const c=j.candidates&&j.candidates[0];x=c&&c.content&&c.content.parts?c.content.parts.filter(p=>!p.thought).map(p=>p.text||"").join(""):""}
+  else{if(j.type==="error")throw new Error(j.error.message);if(j.type==="content_block_delta"&&j.delta&&j.delta.text)x=j.delta.text}
+  if(x){out+=x;onT(out)}};
+ if(r.body&&r.body.getReader){
+  const rd=rdr=r.body.getReader(),dc=new TextDecoder();let buf="";
+  for(;;){const{done,value}=await rd.read();if(done||stopped)break;buf+=dc.decode(value,{stream:true});const ls=buf.split("\n");buf=ls.pop();ls.forEach(line)}
+  if(buf)line(buf)}
+ else{(await r.text()).split("\n").forEach(line)}
+ if(stopped)throw Object.assign(new Error("หยุดแล้ว"),{name:"AbortError"});
+ if(!out)throw new Error("ไม่ได้รับข้อความตอบกลับ (ลองเปลี่ยนโมเดลหรือลดจำนวนฉาก)");
+ return out}
+async function runAI(refine){
+ if(!KEY())return toast("ใส่ API key ก่อน");
+ let init=!refine;
+ if(refine){const q=$("#rf").value.trim();if(!q)return toast("พิมพ์สิ่งที่ต้องการแก้ก่อน");if(!aiMsgs.length)return toast("กด สร้างด้วย AI ก่อน");
+  const last=aiMsgs[aiMsgs.length-1];if(last.role==="assistant"&&s.prompt)last.content=s.prompt;aiMsgs.push({role:"user",content:q})}
+ else aiMsgs=[{role:"user",content:"ข้อมูลโปรเจกต์:\n\n"+build()+"\n\nจากข้อมูลนี้ ให้เขียน MASTER PRODUCTION PROMPT ฉบับสมบูรณ์ ประกอบด้วย: 1) ภาพรวมจักรวาลและโทนภาพ 2) Character Bible 3) โครงเรื่องแยกตามฉากครบ "+s.scenes+" ฉาก (แต่ละฉากมีสรุปเหตุการณ์ แผนเฟรม บทพูดเต็ม Sound Cue และ Continuity Report) 4) Prompt แยกต่อช็อตที่พร้อมนำไปใช้กับเครื่องมือสร้างวิดีโอ 5) กฎความต่อเนื่องทั้งหมด"}];
+ busy(true);setSt("กำลังสร้าง… ("+MODEL()+")");
+ try{const t=await ai(aiMsgs,x=>{s.prompt=x;const o=$("#out");if(o){o.value=x;o.scrollTop=o.scrollHeight}});
+  aiMsgs.push({role:"assistant",content:t});s.prompt=t;setSt("เสร็จแล้ว");if(refine){const q=$("#rf");if(q)q.value=""}}
+ catch(e){if(refine)aiMsgs.pop();else aiMsgs=[];setSt(e.name==="AbortError"?"หยุดแล้ว":"ผิดพลาด: "+e.message+(/fetch|network/i.test(e.message)?" — ตรวจอินเทอร์เน็ต หรือเปิดไฟล์ด้วยเบราว์เซอร์ปกติ (Chrome/Edge) แทนตัวแสดงไฟล์ในแอป":""))}
+ busy(false)}
+let BASE=null,BASEN="";
+const pad=n=>String(n).padStart(3,"0");
+function plan(){
+ const db=BASE&&BASE.character_db?JSON.parse(JSON.stringify(BASE.character_db)):{};
+ const baseIds=Object.keys(db);
+ let n=Object.values(db).reduce((m,c)=>Math.max(m,c.character_number||0),0);const map=[],look={};
+ s.chars.forEach(c=>{const L=c.n+": "+[c.l,c.p&&"พลัง "+c.p,c.w&&c.w!=="ไม่มี"&&"อาวุธ "+c.w].filter(Boolean).join(" | ");
+  const ex=baseIds.find(k=>db[k].character_name===c.n&&!map.includes(k));
+  if(ex){map.push(ex);look[ex]=L;return}
+  n++;const id="CHAR_"+pad(n);let nm=c.n,k=2;while(Object.values(db).some(d=>d.character_name===nm))nm=c.n+" "+k++;
+  db[id]={character_number:n,character_name:nm,face_id:"FACE_"+pad(n),voice_id:"VOICE_"+pad(n),status:"LOCKED",model_sheet_url:"",costume_id:"COSTUME_001",master_prompt_ref:id+"_MASTER_V1 | "+L};map.push(id);look[id]=L});
+ const q=BASE&&BASE.shots_queue||[];
+ return{db,map,look,start:q.reduce((m,x)=>Math.max(m,x.shot_number||0),0)+1}}
+const ENV=["สำนักงานหรูกลางคืน ฝนตกนอกหน้าต่าง","บ้านไทยร่วมสมัยยามค่ำ ห้องรับแขกอบอุ่น","คฤหาสน์ใหญ่และห้องประชุมผู้มีอำนาจ","วิหารเทพเซียนเหนือเมฆ ป่าเวทมนตร์เรืองแสง","เมืองไซเบอร์นีออนยามค่ำ สถานีอวกาศ","ดาดฟ้าตึกกลางเมืองยามอาทิตย์ตก ท้องฟ้าสีม่วง","คฤหาสน์เก่าในหมอกหนา ทางเดินมืด","สมรภูมิกว้างใหญ่ ควันและเปลวไฟ"];
+const LGT=["แสงเย็นคอนทราสต์สูง","แสงอุ่นจากโคมไฟ นุ่มนวล","แสงนีออนม่วงชมพู rim light","แสงเรืองเวทมนตร์ฟ้าม่วง volumetric","แสงนีออนฟ้าชมพู สะท้อนพื้นเปียก","แสง golden hour อมม่วง","แสงเทียนริบหรี่ เงายาว","แสงไฟและเปลวระเบิดตัดควัน"];
+const CAM=["Wide Angle","Slow Dolly In","Close-up","Tracking Shot","Low Angle","Drone Shot"];
+function tplShots(pl){
+ const ids=pl.map.filter((x,i,a)=>a.indexOf(x)===i),N=s.scenes;
+ const beats=(s.sample||"").split("→").map(x=>x.trim()).filter(Boolean);
+ const eq=[s.wp&&"อาวุธ "+s.wp,s.pw&&"พลัง "+s.pw,s.pet!==O.pet[0]&&"สัตว์คู่กาย "+s.pet,s.veh!==O.veh[0]&&"พาหนะ "+s.veh,s.rings!==O.rings[0]&&"วงแหวนเวท "+s.rings+" ("+s.ringSt+")"].filter(Boolean).join(", ");
+ return[...Array(N)].map((_,i)=>{
+  const a=i===0||i===N-1?ids.slice(0,3):[...new Set([ids[i%ids.length],ids[(i+1)%ids.length]])];
+  const beat=beats.length?beats[i%beats.length]:"";
+  return{inputText:"ฉาก "+(i+1)+"/"+N+" — "+gname()+"\n"+(i===0?"เหตุการณ์หลัก: "+s.event:beat?"จังหวะเรื่อง: "+beat:"ต่อเนื่องจากฉากก่อนหน้า")+(i===N-1?"\nตอนจบ: "+s.end:"")+(eq?"\nอุปกรณ์/พลัง: "+eq:"")+(s.world.trim()?"\nโลก/ฉากหลัง: "+s.world.trim():""),
+   actors:a,speakerId:"NONE",dialogueText:"",dialogueTiming:"",motionDirection:s.frames[i+1]||"",
+   subject:a.map(x=>pl.db[x].character_name).join(", "),action:i===0?s.event:(beat||s.event),environment:s.world.trim()||ENV[s.genre]||"สถานที่ตามเนื้อเรื่อง",camera:CAM[i%CAM.length],lighting:LGT[s.genre]||"แสงสอดคล้องกับโทนอารมณ์ของเรื่อง",moodColor:sty()+", Synthwave neon magenta-cyan palette"}})}
+function mkShot(x,num,pl){
+ const db=pl.db,st=v=>String(v==null?"":v);
+ let actors=(Array.isArray(x.actors)?x.actors:[]).map(a=>String(a).trim().toUpperCase()).filter(a=>db[a]);
+ const src=Array.isArray(x.dialogues)?x.dialogues:(x.speakerId&&String(x.speakerId).toUpperCase()!=="NONE"?[{speakerId:x.speakerId,text:x.dialogueText,timing:x.dialogueTiming}]:[]);
+ const dl=src.map(q=>({speakerId:String(q&&q.speakerId||"").trim().toUpperCase(),text:st(q&&(q.text!=null?q.text:q.dialogueText)).trim(),timing:st(q&&(q.timing!=null?q.timing:q.dialogueTiming))})).filter(q=>db[q.speakerId]&&q.text);
+ dl.forEach(q=>{if(!actors.includes(q.speakerId))actors.push(q.speakerId)});
+ if(!actors.length&&pl.map[0])actors=[pl.map[0]];
+ const dialogues=dl.map(q=>({speakerId:q.speakerId,voiceId:db[q.speakerId].voice_id,text:q.text,timing:q.timing})),f=dialogues[0];
+ let it=st(x.inputText);if(s.lock){const lk=actors.map(a=>pl.look[a]||pl.db[a].character_name).join(" / ");if(lk&&!it.includes("[ล็อกตัวละคร]"))it+="\n[ล็อกตัวละคร] "+lk}
+ return{label:"Input Node\nรับข้อมูลเริ่มต้น",shotNumber:num,inputText:it,actors,dialogues,speakerId:f?f.speakerId:"NONE",speakerVoiceId:f?f.voiceId:"",dialogueText:f?f.text:"",dialogueTiming:f?f.timing:"",masterFrameImage:"",motionDirection:st(x.motionDirection),
+  cinematicDetails:{subject:st(x.subject),action:st(x.action),environment:st(x.environment),camera:st(x.camera),lighting:st(x.lighting),moodColor:st(x.moodColor),aspectRatio:"16:9"}}}
+
+function buildWF(){
+ const pl=plan(),src=s.shots&&s.shots.length?s.shots:tplShots(pl);
+ const queue=(BASE&&BASE.shots_queue?[...BASE.shots_queue]:[]);
+ src.forEach((x,i)=>{const d=mkShot(x,pl.start+i,pl);queue.push({shot_number:d.shotNumber,status:"PASS",description:"Subject: "+(d.cinematicDetails.subject||"N/A")+" | Env: "+(d.cinematicDetails.environment||"N/A"),inputData:d})});
+ let nodes,edges;
+ if(BASE&&BASE.nodes_state){nodes=BASE.nodes_state;edges=BASE.edges_state||[]}
+ else{const f=queue[0].inputData;
+  const sty=(b,c,bd,w)=>({background:b,color:c,border:bd,borderRadius:10,padding:14,width:w,whiteSpace:"pre-line"});
+  nodes=[{id:"input-1",type:"custom",position:{x:50,y:120},data:JSON.parse(JSON.stringify(f)),style:sty("#172b48","#e5edff","1px solid #4386e8",165)},
+   {id:"validator-1",type:"custom",position:{x:280,y:120},data:{label:"Validation Gate Node\nด่านตรวจกฎของ Director",validationStatus:"PENDING",lastError:null,autoFixable:false,targetCharId:null},style:sty("#3f2c00","#ffedd5","2px solid #eab308",175)},
+   {id:"prompt-1",type:"custom",position:{x:530,y:120},data:{label:"AI Prompt Node\nสร้างคำสั่ง AI",promptText:""},style:sty("#291e4b","#f0e7ff","1px solid #9b78ef",165)},
+   {id:"video-1",type:"video",position:{x:760,y:120},data:{label:"Output Node\nส่งออกไปยัง Google Veo 3",masterPrompt:"",shortPrompt:""}}];
+  edges=[{id:"e1",source:"input-1",target:"validator-1",animated:true},{id:"e2",source:"validator-1",target:"prompt-1",animated:true},{id:"e3",source:"prompt-1",target:"video-1",animated:true}]}
+ const name=(BASE&&BASE.project_name)||s.title.trim()||(gname()+" · Drama God");
+ return{project_name:name,workflow_id:(BASE&&BASE.workflow_id)||"1",timestamp:new Date().toISOString(),workflow_type:"AI Drama Studio — Workflow Editor v1.2.0",character_db:pl.db,shots_queue:queue.sort((a,b)=>a.shot_number-b.shot_number),nodes_state:nodes,edges_state:edges,prompt_settings:{storyContext:[s.title.trim()&&"ชื่อเรื่อง: "+s.title.trim(),gname(),"สไตล์ภาพ: "+sty(),s.world.trim()&&"ฉากหลัง: "+s.world.trim(),s.theme.trim()&&"แก่นเรื่อง/โทน: "+s.theme.trim(),"เหตุการณ์หลัก: "+s.event,"ตอนจบ: "+s.end,s.lock?"ตัวละครต้องหน้าเหมือนเดิมทุกช็อต":"",s.extra.trim()&&"ข้อกำหนดเพิ่มเติม: "+s.extra.trim()].filter(Boolean).join(" | "),styleSuffix:"Cinematic, ultra detailed, 8K, "+sty()+", Synthwave neon palette",negative:"face change between shots, extra characters, text overlay, watermark, distorted hands"}}}
+function parseShots(t){
+ t=t.replace(/```json|```/g,"");const a=t.indexOf("["),b=t.lastIndexOf("]");if(a<0)throw new Error("AI ไม่ได้ส่ง JSON กลับมา");
+ let raw=b>a?t.slice(a,b+1):t.slice(a);
+ try{return JSON.parse(raw)}catch(e){const c=raw.lastIndexOf("}");if(c<0)throw new Error("อ่าน JSON ไม่ได้ ลองใหม่หรือลดจำนวนฉาก");return JSON.parse(raw.slice(0,c+1)+"]")}}
+async function runShots(){
+ if(!KEY())return toast("ใส่ API key ก่อน");
+ const pl=plan(),n=Math.min(80,s.scenes*(+s.spc||1));
+ const cl=s.chars.map((c,i)=>pl.map[i]+" = "+c.n+" | พลัง: "+c.p+" | อาวุธ: "+c.w+" | รูปลักษณ์: "+c.l+" | เสียง: "+pl.db[pl.map[i]].voice_id).join("\n");
+ const msg="ข้อมูลโปรเจกต์:\n\n"+build()+"\n\nรหัสตัวละคร:\n"+cl+"\n\nแตกเรื่องนี้เป็น "+n+" ช็อต เรียงตามเวลา ครอบคลุมทั้ง "+s.scenes+" ฉาก ตอบเป็น JSON array เท่านั้น แต่ละช็อตมีคีย์: inputText (สรุปช็อตภาษาไทย), actors (array รหัสตัวละครที่อยู่ในช็อต), dialogues (array บทพูดตามลำดับที่พูด พูดได้หลายคนต่อช็อต แต่ละรายการเป็น {speakerId: รหัสที่อยู่ใน actors, text: บทพูดไทย, timing: เช่น 'วินาทีที่ 2'} ใช้ [] ถ้าช็อตนั้นไม่มีบทพูด และควรให้ตัวละครโต้ตอบกันเมื่อมีหลายคนอยู่ในฉาก), motionDirection (ทิศทางการเคลื่อนไหวของตัวละคร/วัตถุ), subject, action, environment, camera (ใช้ศัพท์เช่น Low Angle, Slow Dolly In, Close-up, Wide Angle, Tracking Shot, Drone Shot), lighting, moodColor (3 คีย์หลังเป็นภาษาอังกฤษหรือไทยก็ได้ ให้สอดคล้องกับสไตล์ภาพ) ห้ามมีข้อความนอก JSON";
+ busy(true);setSt("กำลังแตกช็อต "+n+" ช็อต…");
+ try{const t=await ai([{role:"user",content:msg}],x=>setSt("กำลังแตกช็อต… ("+x.length+" ตัวอักษร)"),"คุณคือผู้ช่วยวางช็อตภาพยนตร์ ตอบเป็น JSON array ที่ถูกต้องตามรูปแบบที่กำหนดเท่านั้น ห้ามมี markdown หรือข้อความอื่น");
+  const arr=parseShots(t);if(!Array.isArray(arr)||!arr.length)throw new Error("ไม่ได้รับช็อต");
+  s.shots=arr;const e=$("#shotinfo");if(e)e.textContent="แตกช็อตด้วย AI แล้ว "+arr.length+" ช็อต";setSt("เสร็จแล้ว "+arr.length+" ช็อต — กดส่งออก Project JSON ได้เลย")}
+ catch(e){setSt(e.name==="AbortError"?"หยุดแล้ว":"ผิดพลาด: "+e.message)}
+ busy(false)}
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("on"),1800)}
+const sel=(k,arr,v)=>`<select data-k="${k}">${arr.map(o=>`<option${o===v?" selected":""}>${esc(o)}</option>`).join("")}</select>`;
+const tog=(k,t,d)=>`<div class="tg"><div>${t}<small>${d}</small></div><label class="sw"><input type="checkbox" data-k="${k}"${s[k]?" checked":""} aria-label="${esc(t)}"><s></s></label></div>`;
+const ta=(k,v,ph,rows)=>`<textarea data-k="${k}" rows="${rows||3}" placeholder="${esc(ph||"")}">${esc(v)}</textarea>`;
+const txt=(k,v,ph)=>`<input type="text" data-k="${k}" value="${esc(v)}" placeholder="${esc(ph||"")}">`;
+const L=t=>`<label class="l">${t}</label>`;
+const head=(n,t,d)=>`<h2><em>0${n}.</em>${t}</h2><p class="sub">${d}</p>`;
+
+const V=[
+()=>head(1,"สร้างจักรวาลละคร","กำหนดแนวทาง ภาพ และขนาดของโปรเจกต์ของคุณ")+L("ชื่อเรื่อง / ชื่อโปรเจกต์ (ไม่บังคับ)")+txt("title",s.title,"เช่น เทพบุตรแห่งนีออน")+L("แนวละครหลัก")+`<div class="opts">${GENRES.map((g,i)=>`<button class="opt${i===s.genre?" on":""}" data-a="genre" data-i="${i}">${g[0]} ${g[1]}</button>`).join("")}<button class="opt${s.genre===8?" on":""}" data-a="genre" data-i="8">✍️ กำหนดเอง</button></div>`+(s.genre===8?`<div style="margin-top:8px">`+txt("gCustom",s.gCustom,"พิมพ์แนวของคุณเอง เช่น สยองขวัญตลก ย้อนยุค")+`</div>`:"")+L("สไตล์ภาพ")+sel("style",[...O.style,CUS],s.style)+(s.style===CUS?`<div style="margin-top:8px">`+txt("styleCustom",s.styleCustom,"พิมพ์สไตล์ภาพเอง เช่น สีน้ำญี่ปุ่นผสมนีออน")+`</div>`:"")+L(`<span class="rg"><span>จำนวนฉาก</span><b id="v-scenes">${s.scenes} ฉาก</b></span>`)+`<div style="display:flex;gap:10px;align-items:center"><input type="range" data-k="scenes" min="1" max="36" value="${s.scenes}" aria-label="จำนวนฉาก" style="flex:1"><input type="number" data-k="scenes" min="1" max="60" value="${s.scenes}" aria-label="พิมพ์จำนวนฉากเอง" style="width:78px"></div><p class="hint">สไลเดอร์ถึง 36 ฉาก — พิมพ์ตัวเลขเองได้ถึง 60 ฉาก</p>`+L("ขนาดทีมนักแสดง")+sel("cast",[...O.cast,CUS],s.cast)+(s.cast===CUS?`<div style="margin-top:8px">`+txt("castCustom",s.castCustom,"เช่น ตัวละครหลัก 2 คน + ตัวประกอบ 8 คน")+`</div>`:"")+`<h3 class="k" style="margin:22px 0 2px;font-size:17px;color:var(--cy)">ตั้งค่าเพิ่มเติมเอง (ไม่บังคับ)</h3><p class="hint">ยิ่งใส่รายละเอียด AI ยิ่งเขียนตรงใจ ข้อมูลนี้ไหลไปทั้ง Master Prompt และไฟล์ส่งออก</p>`+L("ฉากหลัง / โลก / ยุคสมัย")+ta("world",s.world,"เช่น กรุงเทพฯ ปี 2099 ที่เมฆนีออนปกคลุมเมือง",2)+L("โทนอารมณ์ / แก่นเรื่อง")+txt("theme",s.theme,"เช่น ความรักกับการให้อภัย / ตึงเครียดแต่อบอุ่น")+L("ข้อกำหนดเพิ่มเติมของคุณ")+ta("extra",s.extra,"เช่น ห้ามมีฉากรุนแรง ใช้ภาษาสุภาพ ตัวเอกต้องไม่ตาย",3),
+()=>head(2,"นักแสดงและ Character Lock","เพิ่ม ลบ และแก้ไขตัวละคร กำหนดบทบาทให้ทุกคนมีส่วนร่วมในเหตุการณ์")+s.chars.map((c,i)=>`<div class="char"><header><div><b>${esc(c.n)}</b><span>${esc(c.r)}</span></div><button class="btn sm d" data-a="del" data-i="${i}">ลบ</button></header><div class="f">พลังประจำตัว</div><input type="text" data-c="${i}.p" value="${esc(c.p)}"><div class="f">อาวุธคู่กาย</div><input type="text" data-c="${i}.w" value="${esc(c.w)}"><div class="f">รูปลักษณ์และจุดเด่น</div><input type="text" data-c="${i}.l" value="${esc(c.l)}"></div>`).join("")+(s.chars.length?"":`<p class="hint">ยังไม่มีตัวละคร — เพิ่มด้านล่างหรือให้ AI สุ่มให้</p>`)+L("ชื่อตัวละครใหม่")+txt("newName",s.newName,"เช่น หลินเยว่ / เทพอัคคี / คุณยายสมใจ")+L("บทบาท")+sel("newRole",O.role,s.newRole)+`<div class="row" style="margin-top:10px"><button class="btn" data-a="add">+ เพิ่มตัวละคร</button></div>`+L("แนวทางคัดเลือกนักแสดง")+sel("castDir",O.castDir,s.castDir)+L("แนบภาพตัวละคร (เลือกได้หลายภาพ)")+`<input type="file" id="files" accept="image/*" multiple style="width:100%;font-size:13px"><p class="hint" id="fl">${s.refs.length?"เลือกแล้ว: "+esc(s.refs.join(", ")):"ยังไม่ได้เลือกภาพ — ระบบจะสุ่มแนวคิดตัวละครให้ได้"}</p><p class="hint">ภาพนี้ใช้เป็นภาพอ้างอิงในโปรเจกต์เท่านั้น ไฟล์จะไม่ถูกอัปโหลด Prompt จะระบุชื่อไฟล์ให้คุณแนบเองในเครื่องมือสร้างภาพ/วิดีโอ</p><div class="row" style="margin-top:10px"><button class="btn sm" data-a="clr">ล้างภาพที่เลือก</button><button class="btn p sm" data-a="rcast">✦ ให้ AI สุ่มตัวละครให้</button></div>`+L("บันทึกอ้างอิง / รูปลักษณ์เพิ่มเติม")+ta("note",s.note,"อธิบายใบหน้า ทรงผม สีตา ชุดประจำตัว หรือรายละเอียดที่ต้องการ"),
+()=>head(3,"พลังเทพและอุปกรณ์","ปรับแต่งความสามารถ อาวุธ วงแหวนเวท และพาหนะประจำจักรวาล")+L("สัตว์เลี้ยงคู่กาย")+sel("pet",O.pet,s.pet)+L("พาหนะ")+sel("veh",O.veh,s.veh)+L("อาวุธเทพคู่กายหลัก (เลือก 1 อย่าง)")+sel("wp",O.wp,s.wp)+L("พลังประจำตัวหลัก")+txt("pw",s.pw)+L("วงแหวนเวทด้านหลัง")+sel("rings",O.rings,s.rings)+L("รูปแบบวงแหวน")+sel("ringSt",O.ringSt,s.ringSt),
+()=>head(4,"ห้องเขียนบทสุดเข้มข้น","ออกแบบแรงจูงใจ ความลับ และจุดพลิกผันที่ทำให้ผู้ชมอยากดูต่อ")+L("เหตุการณ์สุดเข้มข้นที่ต้องการ")+ta("event",s.event,"",3)+L("แนวทางตอนจบ")+sel("end",O.end,s.end)+tog("rndEvt","สุ่มเหตุการณ์ใหม่ทุกครั้ง","สุ่มแรงจูงใจ ความลับ อุปสรรค และผลลัพธ์")+tog("avoid","หลีกเลี่ยงเนื้อเรื่องซ้ำ","สร้างบันทึกเรื่องที่เคยสุ่มในโปรเจกต์นี้")+`<div class="row" style="margin-top:14px"><button class="btn p sm" data-a="revt">✦ สุ่มเหตุการณ์ตัวอย่าง</button></div>`+L("ตัวอย่างเรื่องก่อนผลิต")+ta("sample",s.sample,"กดสุ่มเหตุการณ์เพื่อดูตัวอย่าง",5),
+()=>head(5,"กำกับเฟรมและเสียง","กำหนดบทพูด จังหวะภาพ การกระทำ และการรักษาความต่อเนื่อง")+L("สไตล์เสียงพากย์")+sel("voice",O.voice,s.voice)+tog("lock","ล็อคตัวละครทุกฉาก","ใบหน้า ทรงผม เสื้อผ้า อาวุธ พลัง และเสียง")+tog("all","ทุกตัวละครมีส่วนร่วม","ตัวละครที่ไม่มีบทพูดต้องมีปฏิกิริยาหรือกระทบต่อเหตุการณ์")+tog("narr","บทพูดเต็มและเสียงบรรยาย","ระบุอารมณ์ น้ำเสียง จังหวะหยุด และเสียงประกอบ")+L(`<span class="rg"><span>เฟรมที่กำลังควบคุม</span><b id="v-frame">เฟรม ${s.frame}</b></span>`)+`<input type="range" data-k="frame" min="1" max="240" value="${s.frame}" aria-label="เฟรม">`+L("คำสั่งกำกับเฟรม")+`<textarea id="fr" rows="4" placeholder="เช่น กล้องเคลื่อนเข้าหาใบหน้า แววตาสั่นไหว ก่อนเผยความลับ">${esc(s.frames[s.frame]||"")}</textarea><p class="hint">คำสั่งแต่ละเฟรมถูกจำแยกกัน เลื่อนสไลเดอร์เพื่อกรอกเฟรมอื่น</p>`+L("ความยาวคลิปต่อฉาก")+sel("len",O.len,s.len),
+()=>head(6,"ผลิตและส่งออก","รวมข้อกำหนดทั้งหมดเป็น MASTER PROMPT สำหรับใช้กับระบบ AI ที่คุณเลือก")+`<div class="stats"><div><b>${s.scenes}</b>ฉากทั้งหมด</div><div><b>${s.chars.length}</b>ตัวละคร</div><div><b>6</b>ขั้นตอน</div></div><details class="ky"${KEY()?"":" open"}><summary>ตั้งค่า AI (API key ของคุณ)</summary><label class="l">ผู้ให้บริการ</label><select id="prov">${Object.keys(PN).map(k=>`<option value="${k}"${k===PROV()?" selected":""}>${PN[k]}</option>`).join("")}</select><label class="l">API key${PROV()==="google"?" (จาก aistudio.google.com/apikey)":" (จาก console.anthropic.com)"}</label><input type="password" id="apikey" autocomplete="off" value="${esc(KEY())}" placeholder="${PROV()==="google"?"AIza...":"sk-ant-..."}"><label class="l">โมเดล (พิมพ์ชื่ออื่นเองได้)</label><input type="text" id="model" list="ml" value="${esc(MODEL())}"><datalist id="ml">${M[PROV()].map(m=>`<option value="${m}">`).join("")}</datalist><p class="hint">key เก็บในเบราว์เซอร์เครื่องนี้เท่านั้น แยกตามผู้ให้บริการ และไม่รวมในไฟล์ JSON ที่ส่งออก ใช้กับเครื่องส่วนตัวเท่านั้น</p><div class="row" style="margin-top:8px"><button class="btn sm d" data-a="clrkey">ลบ key</button></div></details><div class="row"><button class="btn p" id="aib" data-a="ai">✦ สร้างด้วย AI</button><button class="btn d" id="stb" data-a="stop" hidden>■ หยุด</button><button class="btn" data-a="gen">สร้างจากแม่แบบ</button><button class="btn" data-a="save">+ บันทึกโปรเจกต์</button></div><div id="st" role="status"></div>`+L("MASTER PRODUCTION PROMPT")+`<textarea id="out" data-k="prompt" placeholder="Prompt ของคุณจะแสดงที่นี่">${esc(s.prompt)}</textarea>`+L("สั่งให้ AI ปรับแก้")+`<textarea id="rf" rows="2" placeholder="เช่น ทำฉาก 2 ให้ดราม่าขึ้น / เพิ่มบทพูดตัวร้าย"></textarea><div class="row" style="margin-top:8px"><button class="btn" id="rfb" data-a="refine">✦ ปรับแก้ด้วย AI</button></div><div class="row" style="margin-top:12px"><button class="btn p" data-a="copy">▣ คัดลอก Prompt ไปใช้</button><button class="btn" data-a="dl">↓ ดาวน์โหลด Prompt .txt</button><button class="btn" data-a="json">↓ ส่งออกโปรเจกต์ JSON</button></div><div class="card" style="margin:16px 0 0;padding:14px"><h3 style="font-size:18px">ส่งออกไป AI Film Control</h3><p class="hint">สร้างไฟล์ Project JSON ที่ปุ่ม 📥 Import ในแอป Workflow Editor อ่านได้โดยตรง (ตัวละคร → คลังตัวละคร, แต่ละช็อต → คิว Shot)</p>`+L("ช็อตต่อฉาก (ใช้กับการแตกช็อตด้วย AI)")+`<select data-k="spc">${[1,2,3].map(n=>`<option${n==s.spc?" selected":""}>${n}</option>`).join("")}</select>`+L("รวมกับ Backup เดิมของแอป (ไม่บังคับ — กันตัวละครเดิมถูกทับ)")+`<input type="file" id="basef" accept=".json" style="width:100%;font-size:13px"><p class="hint" id="basel">${BASEN?"ใช้ Backup: "+esc(BASEN):"ไม่ได้เลือก — ไฟล์ที่ส่งออกจะมีเฉพาะตัวละครและช็อตจากแอปนี้"}</p><p class="hint" id="shotinfo">${s.shots?"แตกช็อตด้วย AI แล้ว "+s.shots.length+" ช็อต":"ยังไม่ได้แตกช็อต — ถ้าไม่แตก จะใช้แม่แบบ 1 ช็อตต่อฉาก (เติมสถานที่ แสง กล้อง จังหวะเรื่อง อาวุธ/พลัง และล็อกตัวละครให้ แต่ไม่มีบทพูด)"}</p><div class="row" style="margin-top:10px"><button class="btn p" id="shb" data-a="shotsai">✦ แตกเป็นช็อตด้วย AI</button><button class="btn" data-a="wfjson">↓ ส่งออก Project JSON</button></div></div><p class="note"><b>หมายเหตุการผลิต</b><br>ไฟล์ HTML นี้สร้างการตั้งค่าและ Prompt ได้ภายในเบราว์เซอร์ ไม่ได้เรนเดอร์วิดีโอหรือสร้างเสียงจริง นำ Prompt ไปใช้กับเครื่องมือสร้างภาพ/วิดีโอ/เสียงที่คุณเลือก</p>`];
+
+function render(keep){
+ $("#nav").innerHTML=STEPS.map((t,i)=>`<button data-a="step" data-i="${i}" class="${i===s.step?"on":""}"><i>0${i+1}</i>${t}</button>`).join("");
+ let h=V[s.step]();
+ if(s.step<5)h+=`<div class="acts"><button class="btn" data-a="back"${s.step?"":" disabled"}>← ย้อนกลับ</button><button class="btn" data-a="reset">รีเซ็ตขั้นตอน</button><button class="btn p" data-a="next">ขั้นตอนถัดไป →</button></div>`;
+ else h+=`<div class="acts" style="grid-template-columns:1fr 1fr"><button class="btn" data-a="back">← ย้อนกลับ</button><button class="btn" data-a="reset">รีเซ็ตขั้นตอน</button></div>`;
+ $("#step").innerHTML=h;
+ if(!keep)$("#flow").scrollIntoView({block:"start"});
+ const bf=$("#basef");if(bf)bf.onchange=()=>{const fl=bf.files[0];if(!fl)return;const r=new FileReader();r.onload=()=>{try{const j=JSON.parse(r.result);if(!j.character_db||!j.nodes_state)throw 0;BASE=j;BASEN=fl.name}catch(e){BASE=null;BASEN="";toast("ไฟล์ Backup ไม่ถูกต้อง")}const l=$("#basel");if(l)l.textContent=BASEN?"ใช้ Backup: "+BASEN:"ไม่ได้เลือก"};r.readAsText(fl)};
+ const f=$("#files");if(f)f.onchange=()=>{s.refs=[...f.files].map(x=>x.name);$("#fl").textContent=s.refs.length?"เลือกแล้ว: "+s.refs.join(", "):"ยังไม่ได้เลือกภาพ"};
+}
+function build(){
+ const cs=s.chars;
+ const fr=Object.keys(s.frames).filter(k=>s.frames[k].trim()).sort((a,b)=>a-b).map(k=>`- เฟรม ${k}: ${s.frames[k].trim()}`).join("\n")||"- (ไม่ได้ระบุ — ให้ AI วางเฟรมตามโครงเรื่อง)";
+ return `THAI DRAMA GOD STUDIO — MASTER PRODUCTION PROMPT
+SYNTHWAVE EDITION
+
+[บทบาท]
+คุณคือทีมผู้กำกับภาพยนตร์ นักเขียนบท ผู้กำกับการแสดง และผู้กำกับเสียงระดับมืออาชีพ
+
+[A. จักรวาลละคร]
+${s.title.trim()?"ชื่อเรื่อง: "+s.title.trim()+"\n":""}แนว: ${gname()}
+สไตล์ภาพ: ${sty()}
+${s.world.trim()?"ฉากหลัง/โลก/ยุคสมัย: "+s.world.trim()+"\n":""}${s.theme.trim()?"โทนอารมณ์/แก่นเรื่อง: "+s.theme.trim()+"\n":""}จำนวนฉาก: ${s.scenes}
+ขนาดทีมนักแสดง: ${cst()}
+ความยาวคลิปต่อฉาก: ${s.len}
+${s.extra.trim()?"\n[ข้อกำหนดเพิ่มเติมจากผู้ใช้ — ต้องปฏิบัติตามอย่างเคร่งครัด]\n"+s.extra.trim()+"\n":""}
+[B. CHARACTER BIBLE — ต้องคงที่ทุกฉาก]
+${cs.map((c,i)=>`${i+1}. ${c.n} | บทบาท: ${c.r} | พลัง: ${c.p} | อาวุธ: ${c.w} | รูปลักษณ์: ${c.l}`).join("\n")||"(ยังไม่ได้กำหนด)"}
+แนวทางคัดเลือกนักแสดง: ${s.castDir}
+ภาพอ้างอิง: ${s.refs.length?s.refs.join(", ")+" (ผู้ใช้แนบเองในเครื่องมือสร้างภาพ)":"ไม่มี — ให้สร้างแนวคิดตัวละครจากรายละเอียดข้างต้น"}
+${s.note?"บันทึกเพิ่มเติม: "+s.note:""}
+
+[C. พลังเทพและอุปกรณ์]
+สัตว์คู่กาย: ${s.pet} | พาหนะ: ${s.veh}
+อาวุธเทพหลัก: ${s.wp}
+พลังประจำตัวหลัก: ${s.pw}
+วงแหวนเวทด้านหลัง: ${s.rings} (${s.ringSt})
+
+[D. เหตุการณ์สุดเข้มข้น]
+${s.event}
+แนวทางตอนจบ: ${s.end}
+${s.rndEvt?"- สุ่มเหตุการณ์ใหม่ในแต่ละครั้งที่สร้าง\n":""}${s.avoid?"- หลีกเลี่ยงเนื้อเรื่องที่ซ้ำกับที่เคยสร้างในโปรเจกต์นี้\n":""}${s.sample?"โครงสร้างตัวอย่าง: "+s.sample:""}
+
+[E. เสียงและเฟรม]
+สไตล์เสียงพากย์: ${s.voice}
+คำสั่งกำกับรายเฟรม:
+${fr}
+
+[F. กฎความต่อเนื่อง]
+${s.lock?"- ล็อคตัวละคร: ใบหน้า ทรงผม เสื้อผ้า อาวุธ พลัง และเสียง ต้องเหมือนเดิมทุกฉาก\n":""}${s.all?"- ทุกตัวละครต้องมีส่วนร่วม แม้ไม่มีบทพูดก็ต้องมีปฏิกิริยา\n":""}${s.narr?"- เขียนบทพูดเต็มและเสียงบรรยาย ระบุอารมณ์ น้ำเสียง จังหวะหยุด และเสียงประกอบ\n":""}- ทุกฉากต้องมี Continuity Sheet และ Character ID
+
+[G. รูปแบบผลลัพธ์]
+สำหรับแต่ละฉาก ส่ง: 1) สรุปฉาก 2) Frame Plan 3) บทพูดและ Sound Cue 4) Continuity Report 5) Prompt แยกต่อช็อต
+ภาษา: ไทย รายละเอียดครบ พร้อมใช้ในขั้นตอนการผลิต`}
+
+function save(){try{return JSON.parse(localStorage.getItem("tdgs")||"[]")}catch(e){return[]}}
+function put(a){try{localStorage.setItem("tdgs",JSON.stringify(a));return true}catch(e){toast("เบราว์เซอร์ไม่อนุญาตให้บันทึก");return false}}
+function plist(){const a=save();$("#plist").innerHTML=a.length?a.map((p,i)=>`<div class="proj"><div><b>${esc(p.name)}</b><small>${esc(p.at)}</small></div><div class="row"><button class="btn sm" data-a="load" data-i="${i}">เปิด</button><button class="btn sm d" data-a="rm" data-i="${i}">ลบ</button></div></div>`).join(""):`<p class="hint">ยังไม่มีโปรเจกต์ที่บันทึกไว้</p>`}
+function file(name,body,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([body],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+
+document.addEventListener("click",e=>{
+ const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,i=+b.dataset.i;
+ if(a==="start"){s.step=0;render()}
+ else if(a==="vault")$("#vault").scrollIntoView();
+ else if(a==="step"){s.step=i;render()}
+ else if(a==="next"){s.step++;render()}
+ else if(a==="back"){s.step=Math.max(0,s.step-1);render()}
+ else if(a==="reset"){const d=def(),K=[["genre","style","scenes","cast","gCustom","styleCustom","castCustom","title","world","theme","extra"],["chars","castDir","refs","note","newName","newRole"],["pet","veh","wp","pw","rings","ringSt"],["event","end","rndEvt","avoid","sample"],["voice","lock","all","narr","frame","frames","len"],["prompt","spc","shots"]][s.step];K.forEach(k=>s[k]=d[k]);render(true);toast("รีเซ็ตขั้นตอนแล้ว")}
+ else if(a==="genre"){s.genre=i;render(true)}
+ else if(a==="add"){const n=s.newName.trim();if(!n)return toast("กรอกชื่อตัวละครก่อน");s.chars.push({n,r:s.newRole,p:"",w:"",l:""});s.newName="";render(true);toast("เพิ่มตัวละครแล้ว")}
+ else if(a==="del"){s.chars.splice(i,1);render(true)}
+ else if(a==="clr"){s.refs=[];render(true)}
+ else if(a==="rcast"){const n=3+Math.floor(Math.random()*2),nm=[...NAMES].sort(()=>Math.random()-.5);s.chars=[...Array(n)].map((_,k)=>{const r=pick(RND);return{n:nm[k],r:k===0?"ตัวเอก":k===1?"ตัวสมทบ":"ตัวร้าย",p:r[0],w:r[1],l:r[2]}});render(true);toast("AI สุ่มตัวละครให้แล้ว")}
+ else if(a==="revt"){s.event=pick(EVT);s.sample=pick(SAMPLE);render(true);toast("สุ่มเหตุการณ์ใหม่แล้ว")}
+ else if(a==="ai")runAI(false);
+ else if(a==="shotsai")runShots();
+ else if(a==="wfjson"){if(!s.chars.length)return toast("ยังไม่มีตัวละคร");file("Project_DramaGod_Backup.json",JSON.stringify(buildWF(),null,2),"application/json");toast("ส่งออกแล้ว — ใช้ปุ่ม 📥 Import ในแอป Workflow")}
+ else if(a==="refine")runAI(true);
+ else if(a==="stop"){stopped=true;if(rdr)try{rdr.cancel()}catch(e){}}
+ else if(a==="clrkey"){LS("tdgs_key_"+PROV(),null);const k=$("#apikey");if(k)k.value="";toast("ลบ key แล้ว")}
+ else if(a==="gen"){s.prompt=build();render(true);toast("สร้าง Master Prompt แล้ว")}
+ else if(a==="save"){const p=save();p.unshift({name:`${s.title.trim()||gname()} · ${s.scenes} ฉาก`,at:new Date().toLocaleString("th-TH"),data:{...s,step:0}});if(put(p)){plist();toast("บันทึกโปรเจกต์แล้ว")}}
+ else if(a==="copy"){const t=s.prompt||(s.prompt=build());(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast("คัดลอกแล้ว"),()=>{$("#out").select();document.execCommand("copy");toast("คัดลอกแล้ว")});render(true)}
+ else if(a==="dl"){file("master-prompt.txt",s.prompt||build(),"text/plain")}
+ else if(a==="json"){file("drama-project.json",JSON.stringify(s,null,2),"application/json")}
+ else if(a==="load"){s={...def(),...save()[i].data,step:5};render();toast("เปิดโปรเจกต์แล้ว")}
+ else if(a==="rm"){const p=save();p.splice(i,1);put(p);plist()}
+});
+document.addEventListener("input",e=>{
+ const t=e.target;
+ if(t.id==="apikey"){LS("tdgs_key_"+PROV(),t.value.trim());return}
+ if(t.id==="model"){LS("tdgs_model_"+PROV(),t.value.trim());return}
+ if(t.id==="prov"){LS("tdgs_prov",t.value);aiMsgs=[];render(true);return}
+ if(t.id==="fr"){s.frames[s.frame]=t.value;return}
+ if(t.dataset.c){const[i,f]=t.dataset.c.split(".");s.chars[i][f]=t.value;return}
+ const k=t.dataset.k;if(!k)return;
+ s[k]=t.type==="checkbox"?t.checked:t.type==="range"?+t.value:t.value;
+ if(k==="scenes"){s.scenes=Math.max(1,Math.min(60,Math.round(+t.value)||1));$("#v-scenes").textContent=s.scenes+" ฉาก";document.querySelectorAll('[data-k="scenes"]').forEach(e=>{if(e!==t)e.value=s.scenes})}
+ if(k==="style"||k==="cast")render(true);
+ if(k==="frame"){$("#v-frame").textContent="เฟรม "+s.frame;$("#fr").value=s.frames[s.frame]||""}
+});
+document.addEventListener("change",e=>{if(e.target.dataset&&e.target.dataset.k==="scenes")e.target.value=s.scenes});
+render(true);plist();
+</script>
+</body>
+</html>
